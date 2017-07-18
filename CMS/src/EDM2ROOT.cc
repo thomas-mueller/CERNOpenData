@@ -42,13 +42,33 @@ EDM2ROOT::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	Handle<std::vector<reco::Muon> > muonsHandle;
 	iEvent.getByLabel("muons", muonsHandle);
 	const std::vector<reco::Muon>* muons = muonsHandle.product();
+	
+	nMuons = muons->size();
+	
+	muon1Pt = muons->size() > 0 ? muons->at(0).p4().Pt() : 0.0;
+	muon1Eta = muons->size() > 0 ? muons->at(0).p4().Eta() : 0.0;
+	muon1Phi = muons->size() > 0 ? muons->at(0).p4().Phi() : 0.0;
+	
+	muon2Pt = muons->size() > 1 ? muons->at(1).p4().Pt() : 0.0;
+	muon2Eta = muons->size() > 1 ? muons->at(1).p4().Eta() : 0.0;
+	muon2Phi = muons->size() > 1 ? muons->at(1).p4().Phi() : 0.0;
 
 	// https://github.com/cms-cvs-history/DataFormats-EgammaCandidates/blob/master/interface/GsfElectron.h
 	Handle<std::vector<reco::GsfElectron> > electronsHandle;
 	iEvent.getByLabel("gsfElectrons", electronsHandle);
 	const std::vector<reco::GsfElectron>* electrons = electronsHandle.product();
 	
-	std::cout << muons->size() << ", " << electrons->size() << std::endl;
+	nElectrons = electrons->size();
+	
+	electron1Pt = electrons->size() > 0 ? electrons->at(0).p4().Pt() : 0.0;
+	electron1Eta = electrons->size() > 0 ? electrons->at(0).p4().Eta() : 0.0;
+	electron1Phi = electrons->size() > 0 ? electrons->at(0).p4().Phi() : 0.0;
+	
+	electron2Pt = electrons->size() > 1 ? electrons->at(1).p4().Pt() : 0.0;
+	electron2Eta = electrons->size() > 1 ? electrons->at(1).p4().Eta() : 0.0;
+	electron2Phi = electrons->size() > 1 ? electrons->at(1).p4().Phi() : 0.0;
+	
+	outputTree->Fill();
 }
 
 
@@ -56,6 +76,27 @@ EDM2ROOT::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 void 
 EDM2ROOT::beginJob()
 {
+	outputTree = fileService->make<TTree>("events", "");
+	
+	outputTree->Branch("nMuons", &nMuons, "nMuons/I");
+	
+	outputTree->Branch("muon1Pt", &muon1Pt, "muon1Pt/F");
+	outputTree->Branch("muon1Eta", &muon1Eta, "muon1Eta/F");
+	outputTree->Branch("muon1Phi", &muon1Phi, "muon1Phi/F");
+	
+	outputTree->Branch("muon2Pt", &muon2Pt, "muon2Pt/F");
+	outputTree->Branch("muon2Eta", &muon2Eta, "muon2Eta/F");
+	outputTree->Branch("muon2Phi", &muon2Phi, "muon2Phi/F");
+	
+	outputTree->Branch("nElectrons", &nElectrons, "nElectrons/I");
+	
+	outputTree->Branch("electron1Pt", &electron1Pt, "electron1Pt/F");
+	outputTree->Branch("electron1Eta", &electron1Eta, "electron1Eta/F");
+	outputTree->Branch("electron1Phi", &electron1Phi, "electron1Phi/F");
+	
+	outputTree->Branch("electron2Pt", &electron2Pt, "electron2Pt/F");
+	outputTree->Branch("electron2Eta", &electron2Eta, "electron2Eta/F");
+	outputTree->Branch("electron2Phi", &electron2Phi, "electron2Phi/F");
 }
 
 // ------------ method called once each job just after ending the event loop  ------------

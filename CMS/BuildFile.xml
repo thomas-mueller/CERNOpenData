@@ -3,6 +3,7 @@
 <use name="FWCore/ParameterSet"/>
 <use name="DataFormats/ParticleFlowCandidate"/>
 <use name="DataFormats/ParticleFlowReco"/>
+<use name="PhysicsTools/UtilAlgos"/>
 <flags EDM_PLUGIN="1"/>
 <export>
    <lib name="1"/>

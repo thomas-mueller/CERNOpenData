@@ -4,7 +4,7 @@ process = cms.Process("Demo")
 
 process.load("FWCore.MessageService.MessageLogger_cfi")
 
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(100) )
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
 
 process.source = cms.Source("PoolSource",
     # replace 'myfile.root' with the source file you want to use
@@ -13,8 +13,12 @@ process.source = cms.Source("PoolSource",
     )
 )
 
-process.demo = cms.EDAnalyzer('EDM2ROOT'
+process.TFileService = cms.Service("TFileService",
+	fileName = cms.string("output.root"),
+	closeFileFast = cms.untracked.bool(True)
 )
 
+process.events = cms.EDAnalyzer('EDM2ROOT'
+)
 
-process.p = cms.Path(process.demo)
+process.p = cms.Path(process.events)

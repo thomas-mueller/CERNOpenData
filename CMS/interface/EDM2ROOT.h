@@ -12,6 +12,12 @@
 #include "FWCore/Framework/interface/MakerMacros.h"
 
 #include "FWCore/ParameterSet/interface/ParameterSet.h"
+
+#include "FWCore/ServiceRegistry/interface/Service.h"
+#include "CommonTools/UtilAlgos/interface/TFileService.h"
+
+#include <TTree.h>
+
 //
 // class declaration
 //
@@ -35,6 +41,28 @@ private:
 	virtual void endLuminosityBlock(edm::LuminosityBlock const&, edm::EventSetup const&);
 
 	// ----------member data ---------------------------
+	edm::Service<TFileService> fileService;
+	TTree* outputTree = nullptr;
+	
+	int nMuons = 0;
+	
+	float muon1Pt = 0.0;
+	float muon1Eta = 0.0;
+	float muon1Phi = 0.0;
+	
+	float muon2Pt = 0.0;
+	float muon2Eta = 0.0;
+	float muon2Phi = 0.0;
+	
+	int nElectrons = 0;
+	
+	float electron1Pt = 0.0;
+	float electron1Eta = 0.0;
+	float electron1Phi = 0.0;
+	
+	float electron2Pt = 0.0;
+	float electron2Eta = 0.0;
+	float electron2Phi = 0.0;
 };
 
 //define this as a plug-in
