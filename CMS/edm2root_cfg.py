@@ -1,6 +1,6 @@
 import FWCore.ParameterSet.Config as cms
 
-process = cms.Process("Demo")
+process = cms.Process("EDM2ROOT")
 
 process.load("FWCore.MessageService.MessageLogger_cfi")
 
