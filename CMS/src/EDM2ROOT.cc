@@ -1,5 +1,11 @@
 
-#include "CERNOpenData/CMS/interface/EDM2ROOT.h"
+#include <iostream>
+#include <vector>
+
+#include <DataFormats/MuonReco/interface/Muon.h>
+#include <DataFormats/EgammaCandidates/interface/GsfElectron.h>
+
+#include <CERNOpenData/CMS/interface/EDM2ROOT.h>
 
 
 //
@@ -8,7 +14,7 @@
 EDM2ROOT::EDM2ROOT(const edm::ParameterSet& iConfig)
 
 {
-   //now do what ever initialization is needed
+	//now do what ever initialization is needed
 
 }
 
@@ -16,8 +22,8 @@ EDM2ROOT::EDM2ROOT(const edm::ParameterSet& iConfig)
 EDM2ROOT::~EDM2ROOT()
 {
  
-   // do anything here that needs to be done at desctruction time
-   // (e.g. close files, deallocate resources etc.)
+	// do anything here that needs to be done at desctruction time
+	// (e.g. close files, deallocate resources etc.)
 
 }
 
@@ -30,19 +36,19 @@ EDM2ROOT::~EDM2ROOT()
 void
 EDM2ROOT::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 {
-   using namespace edm;
+	using namespace edm;
 
+	// https://github.com/cms-cvs-history/DataFormats-MuonReco/blob/master/interface/Muon.h
+	Handle<std::vector<reco::Muon> > muonsHandle;
+	iEvent.getByLabel("muons", muonsHandle);
+	const std::vector<reco::Muon>* muons = muonsHandle.product();
 
-
-#ifdef THIS_IS_AN_EVENT_EXAMPLE
-   Handle<ExampleData> pIn;
-   iEvent.getByLabel("example",pIn);
-#endif
-   
-#ifdef THIS_IS_AN_EVENTSETUP_EXAMPLE
-   ESHandle<SetupData> pSetup;
-   iSetup.get<SetupRecord>().get(pSetup);
-#endif
+	// https://github.com/cms-cvs-history/DataFormats-EgammaCandidates/blob/master/interface/GsfElectron.h
+	Handle<std::vector<reco::GsfElectron> > electronsHandle;
+	iEvent.getByLabel("gsfElectrons", electronsHandle);
+	const std::vector<reco::GsfElectron>* electrons = electronsHandle.product();
+	
+	std::cout << muons->size() << ", " << electrons->size() << std::endl;
 }
 
 
@@ -85,10 +91,10 @@ EDM2ROOT::endLuminosityBlock(edm::LuminosityBlock const&, edm::EventSetup const&
 // ------------ method fills 'descriptions' with the allowed parameters for the module  ------------
 void
 EDM2ROOT::fillDescriptions(edm::ConfigurationDescriptions& descriptions) {
-  //The following says we do not know what parameters are allowed so do no validation
-  // Please change this to state exactly what you do use, even if it is no parameters
-  edm::ParameterSetDescription desc;
-  desc.setUnknown();
-  descriptions.addDefault(desc);
+	//The following says we do not know what parameters are allowed so do no validation
+	// Please change this to state exactly what you do use, even if it is no parameters
+	edm::ParameterSetDescription desc;
+	desc.setUnknown();
+	descriptions.addDefault(desc);
 }
 
