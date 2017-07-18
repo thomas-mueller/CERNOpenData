@@ -9,7 +9,7 @@ cmsrel CMSSW_5_3_32
 cd CMSSW_5_3_32/src
 eval `scramv1 runtime -sh`
 
-https://github.com/thomas-mueller/CERNOpenData.git
+git clone https://github.com/thomas-mueller/CERNOpenData.git
 
 scram b -j 4
 
