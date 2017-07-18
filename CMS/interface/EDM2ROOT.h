@@ -16,6 +16,9 @@
 #include "FWCore/ServiceRegistry/interface/Service.h"
 #include "CommonTools/UtilAlgos/interface/TFileService.h"
 
+#include <DataFormats/MuonReco/interface/Muon.h>
+#include <DataFormats/EgammaCandidates/interface/GsfElectron.h>
+
 #include <TTree.h>
 
 //
@@ -39,6 +42,9 @@ private:
 	virtual void endRun(edm::Run const&, edm::EventSetup const&);
 	virtual void beginLuminosityBlock(edm::LuminosityBlock const&, edm::EventSetup const&);
 	virtual void endLuminosityBlock(edm::LuminosityBlock const&, edm::EventSetup const&);
+	
+	static float pfIso(reco::Muon const& muon, float puFraction=0.5);
+	static float pfIso(reco::GsfElectron const& electron, float puFraction=0.5);
 
 	// ----------member data ---------------------------
 	edm::Service<TFileService> fileService;
@@ -49,20 +55,24 @@ private:
 	float muon1Pt = 0.0;
 	float muon1Eta = 0.0;
 	float muon1Phi = 0.0;
+	float muon1Iso = 0.0;
 	
 	float muon2Pt = 0.0;
 	float muon2Eta = 0.0;
 	float muon2Phi = 0.0;
+	float muon2Iso = 0.0;
 	
 	int nElectrons = 0;
 	
 	float electron1Pt = 0.0;
 	float electron1Eta = 0.0;
 	float electron1Phi = 0.0;
+	float electron1Iso = 0.0;
 	
 	float electron2Pt = 0.0;
 	float electron2Eta = 0.0;
 	float electron2Phi = 0.0;
+	float electron2Iso = 0.0;
 };
 
 //define this as a plug-in
