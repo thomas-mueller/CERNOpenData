@@ -11,5 +11,10 @@ eval `scramv1 runtime -sh`
 
 git clone https://github.com/thomas-mueller/CERNOpenData.git
 
+git clone https://github.com/grid-control/grid-control.git -b testing
+cd grid-control
+git reset --hard 3f93692
+cd $CMSSW_BASE/src/
+
 scram b -j 4
 
